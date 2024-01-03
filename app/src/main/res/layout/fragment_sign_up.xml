@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/auth_padding"
+    tools:context=".ui.auth.SignUpFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_img"
+        android:layout_width="@dimen/profile_icon_size"
+        android:layout_height="@dimen/profile_icon_size"
+        android:layout_marginTop="@dimen/profile_img_margin_top"
+        android:src="@drawable/user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/add_image"
+        android:layout_width="@dimen/add_icon_size"
+        android:layout_height="@dimen/add_icon_size"
+        android:src="@drawable/ic_add"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/profile_img"
+        app:layout_constraintEnd_toEndOf="@id/profile_img"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/profile_img"
+        app:layout_constraintTop_toTopOf="@id/profile_img"
+        app:layout_constraintVertical_bias="0.881"
+
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        app:layout_constraintTop_toBottomOf="@+id/profile_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/name_edt_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_edt_margin_xxxl"
+        android:background="@drawable/rounded_input"
+        android:hint="@string/name_username"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/btn_text_size"
+        android:paddingHorizontal="@dimen/edt_txt_padding"
+
+        />
+    <androidx.appcompat.widget.AppCompatEditText
+        app:layout_constraintTop_toBottomOf="@+id/name_edt_txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/email_edt_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_edt_margin_large"
+        android:background="@drawable/rounded_input"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/btn_text_size"
+        android:paddingHorizontal="@dimen/edt_txt_padding"
+
+        />
+    <androidx.appcompat.widget.AppCompatEditText
+        app:layout_constraintTop_toBottomOf="@+id/email_edt_txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/password_edt_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_edt_margin_large"
+        android:background="@drawable/rounded_input"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/btn_text_size"
+        android:paddingHorizontal="@dimen/edt_txt_padding"
+
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register"
+        style="@style/Widget.Material3.Button.Icon"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/margin_small_2"
+        android:backgroundTint="@color/color_primary"
+        android:paddingVertical="@dimen/button_padding"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_edt_txt"
+
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_register">
+
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account" />
+
+        <TextView
+            android:id="@+id/text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/login"
+            android:textColor="@color/color_primary" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

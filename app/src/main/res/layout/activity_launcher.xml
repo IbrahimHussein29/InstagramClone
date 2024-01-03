@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+       android:src="@drawable/instagram_logo_8869"
+        android:contentDescription="@string/app_name"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/author_name"
+        app:layout_constraintStart_toStartOf="@id/author_name"
+        app:layout_constraintEnd_toEndOf="@id/author_name"
+        android:text="@string/from"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/gray"
+
+        />
+
+    <TextView
+        android:id="@+id/author_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/Launcher_text_margin"
+        android:text="@string/ibrahim_hussein"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/pink"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
