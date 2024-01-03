@@ -23,4 +23,9 @@
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/invalidEmailPasswordDialogFragment"
+        android:name="com.sec.instagramclone.ui.auth.InvalidEmailPasswordDialogFragment"
+        android:label="fragment_invalid_email_password_dialog"
+        tools:layout="@layout/fragment_invalid_email_password_dialog" />
 </navigation>

@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
+import com.sec.instagramclone.data.common.onError
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentSignInBinding
 import com.sec.instagramclone.ui.MainActivity
@@ -52,9 +54,6 @@ class SignInFragment : Fragment() {
             password = binding.passwordEdtTxt.text.toString()
 
 
-
-
-
         if (validateLogin(email, password)) {
 
             viewModel.login(email, password)
@@ -71,6 +70,9 @@ class SignInFragment : Fragment() {
                 launchActivity<MainActivity> { }
                 requireActivity().finish()
             }
+               it?.onError { _, _ ->
+                   findNavController().navigate(R.id.invalidEmailPasswordDialogFragment)
+               }
         }
 
     }

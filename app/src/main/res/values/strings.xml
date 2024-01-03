@@ -13,6 +13,8 @@
     <string name="question">\?</string>
     <string name="missing_data">Missing Data</string>
     <string name="invalid_email_address">Invalid Email Address</string>
+    <string name="email_address_already_exists">Email address already exists</string>
     <string name="invalid_password_weak">Password must be 8 characters minimum</string>
     <string name="create_new_account">Create new account</string>
+    <string name="ok">OK</string>
 </resources>

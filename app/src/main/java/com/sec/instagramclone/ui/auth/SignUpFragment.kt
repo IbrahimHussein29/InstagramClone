@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.Constants
 import com.sec.instagramclone.data.body.UserBody
+import com.sec.instagramclone.data.common.onError
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentSignUpBinding
 import com.sec.instagramclone.ui.MainActivity
@@ -91,6 +92,9 @@ class SignUpFragment : Fragment() {
             it?.onSuccess {
                 launchActivity<MainActivity> { }
                 requireActivity().finish()
+            }
+            it?.onError{_,_ ->
+                binding.emailEdtTxt.error = resources.getString(R.string.email_address_already_exists)
             }
         }
 

@@ -21,5 +21,7 @@
     <dimen name="margin_small_2">10dp</dimen>
     <dimen name="button_height">55dp</dimen>
     <dimen name="button_padding">10dp</dimen>
+    <dimen name="dialog_width_space">30dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
 
 </resources>
