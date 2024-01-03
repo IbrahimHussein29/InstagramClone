@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
-import com.sec.instagramclone.data.body.LoginBody
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentSignInBinding
 import com.sec.instagramclone.ui.MainActivity
@@ -23,13 +22,15 @@ class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
     private val viewModel by viewModels<LoginVM>()
+    private var email = ""
+    private var password = ""
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignInBinding.inflate(layoutInflater)
-
+        viewModel.getUserData()
         setClickListeners()
         return binding.root
     }
@@ -46,25 +47,25 @@ class SignInFragment : Fragment() {
 
     private fun login() {
 
-        val loginBody = LoginBody(
-            email = binding.emailEdtTxt.text.toString(),
+
+            email = binding.emailEdtTxt.text.toString()
             password = binding.passwordEdtTxt.text.toString()
 
-            )
 
 
 
-        if (validateLogin(loginBody)) {
 
-            viewModel.login(loginBody)
-    collectData()
+        if (validateLogin(email, password)) {
+
+            viewModel.login(email, password)
+             collectData()
 }
 
 
     }
 
     private fun collectData() {
-        collectLatestLifecycleFlow(viewModel.loginData) {
+        collectLatestLifecycleFlow(viewModel.user) {
             it?.onSuccess {
 
                 launchActivity<MainActivity> { }
@@ -74,13 +75,13 @@ class SignInFragment : Fragment() {
 
     }
 
-    private fun validateLogin(loginBody: LoginBody): Boolean {
+    private fun validateLogin(email:String, password:String): Boolean {
         var valid = true
-        if (!loginBody.email.isValidEmail()) {
+        if (!email.isValidEmail()) {
             binding.emailEdtTxt.error = resources.getString(R.string.invalid_email_address)
             valid = false
         }
-        if (loginBody.password.length < 8) {
+        if (password.length < 8) {
             binding.passwordEdtTxt.error = resources.getString(R.string.invalid_password_weak)
             valid = false
         }

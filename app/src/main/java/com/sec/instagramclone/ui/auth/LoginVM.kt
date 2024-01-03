@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.sec.instagramclone.data.body.LoginBody
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.Resource
 import com.sec.instagramclone.data.repository.AppRepositoryImpl
@@ -21,45 +20,45 @@ class LoginVM @Inject constructor(
     private val appRepositoryImpl: AppRepositoryImpl
 ) : ViewModel() {
 
-    private var _loginData = MutableStateFlow<Resource<FirebaseUser>?>(null)
-    val loginData: StateFlow<Resource<FirebaseUser>?> = _loginData
-    private var _registerData = MutableStateFlow<Resource<FirebaseUser>?>(null)
-    val registerData: StateFlow<Resource<FirebaseUser>?> = _registerData
+    private val _user = MutableStateFlow<Resource<FirebaseUser>?>(null)
+    val user: StateFlow<Resource<FirebaseUser>?> = _user
+    private val _userData = MutableStateFlow<Resource<UserBody>?>(null)
+    val userData: StateFlow<Resource<UserBody>?> = _userData
     private var _imageDate = MutableStateFlow<Resource<Unit>?>(null)
     val imageDate: StateFlow<Resource<Unit>?> = _imageDate
 
 
-    fun register(body: UserBody) {
-        appRepositoryImpl.register(body).onEach {
+    fun register(email: String, password: String, user: UserBody) {
+        appRepositoryImpl.register(email, password, user).onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _registerData.value = Resource.Loading()
+                    _user.value = Resource.Loading()
                 }
 
                 is Resource.Error -> {
-                    _registerData.value = Resource.Error(message = it.message ?: "")
+                    _user.value = Resource.Error(message = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _registerData.value = Resource.Success(data = it.data)
+                    _user.value = Resource.Success(data = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun login(body: LoginBody) {
-        appRepositoryImpl.login(body).onEach {
+    fun login(email: String, password: String) {
+        appRepositoryImpl.login(email, password).onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _loginData.value = Resource.Loading()
+                    _user.value = Resource.Loading()
                 }
 
                 is Resource.Error -> {
-                    _loginData.value = Resource.Error(message = it.message ?: "")
+                    _user.value = Resource.Error(message = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _loginData.value = Resource.Success(data = it.data)
+                    _user.value = Resource.Success(data = it.data)
                 }
             }
         }.launchIn(viewModelScope)
@@ -68,17 +67,9 @@ class LoginVM @Inject constructor(
 
     fun logout() {
         appRepositoryImpl.logout()
-        _loginData.value = null
+        _user.value = null
+        _userData.value=null
 
-    }
-
-    val currentUser: FirebaseUser?
-        get() = appRepositoryImpl.currentUser
-
-    init {
-        if (appRepositoryImpl.currentUser != null) {
-            _loginData.value = Resource.Success(appRepositoryImpl.currentUser!!)
-        }
     }
 
     fun loggedUser() {
@@ -86,33 +77,33 @@ class LoginVM @Inject constructor(
         appRepositoryImpl.getLoggedUser().onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _loginData.value = Resource.Loading()
+                    _user.value = Resource.Loading()
                 }
 
                 is Resource.Error -> {
-                    _loginData.value = Resource.Error(message = it.message ?: "")
+                    _user.value = Resource.Error(message = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _loginData.value = Resource.Success(data = it.data)
+                    _user.value = Resource.Success(data = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun getUserData(body: UserBody) {
-        appRepositoryImpl.getUserData(body).onEach {
+    fun getUserData() {
+        appRepositoryImpl.getUserData().onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _loginData.value = Resource.Loading()
+                    _userData.value = Resource.Loading()
                 }
 
                 is Resource.Error -> {
-                    _loginData.value = Resource.Error(message = it.message ?: "")
+                    _userData.value = Resource.Error(message = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _loginData.value = Resource.Success(data = it.data)
+                    _userData.value = Resource.Success(data = it.data)
                 }
             }
 

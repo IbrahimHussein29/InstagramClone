@@ -27,6 +27,9 @@ class SignUpFragment : Fragment() {
     private val viewModel by viewModels<LoginVM>()
     private val binding get() = _binding!!
     private var imageUri: String? = null
+    private var email = ""
+    private var password = ""
+
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             viewModel.uploadImage(uri, Constants.USER_PROFILE_FOLDER) {
@@ -41,16 +44,15 @@ class SignUpFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(layoutInflater)
-
+        viewModel.getUserData()
         setClickListeners()
         return binding.root
     }
 
-    private fun  setClickListeners() {
+    private fun setClickListeners() {
         binding.btnRegister.setOnSafeClickListener {
             register()
         }
@@ -67,23 +69,25 @@ class SignUpFragment : Fragment() {
     }
 
 
-
     private fun register() {
-        val userBody = UserBody(
+        email = binding.emailEdtTxt.text.toString()
+        password = binding.passwordEdtTxt.text.toString()
+
+        val user = UserBody(
             name = binding.nameEdtTxt.text.toString(),
             email = binding.emailEdtTxt.text.toString(),
             password = binding.passwordEdtTxt.text.toString(),
             userImage = imageUri
         )
 
-        if (validateRegister(userBody)) {
-            viewModel.register(userBody)
-
+        if (validateRegister(user)) {
+            viewModel.register(email, password, user)
             collectData()
         }
     }
+
     private fun collectData() {
-        collectLatestLifecycleFlow(viewModel.registerData) {
+        collectLatestLifecycleFlow(viewModel.user) {
             it?.onSuccess {
                 launchActivity<MainActivity> { }
                 requireActivity().finish()
@@ -92,18 +96,18 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun validateRegister(userBody: UserBody): Boolean {
+    private fun validateRegister(user: UserBody): Boolean {
         var valid = true
-        if (userBody.name.isEmpty()) {
+        if (user.name.isEmpty()) {
             binding.nameEdtTxt.error = resources.getString(R.string.missing_data)
             valid = false
         }
 
-        if (userBody.email.isEmpty() && userBody.email.isValidEmail().not()) {
+        if (user.email.isEmpty() && user.email.isValidEmail().not()) {
             binding.emailEdtTxt.error = resources.getString(R.string.invalid_email_address)
             valid = false
         }
-        if (userBody.password.isEmpty() && userBody.password.length < 8) {
+        if (user.password.isEmpty() && user.password.length < 8) {
             binding.passwordEdtTxt.error = resources.getString(R.string.invalid_password_weak)
             valid = false
         }
