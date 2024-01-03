@@ -1,32 +1,66 @@
 package com.sec.instagramclone.ui.splash
 
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.sec.instagramclone.R
+import com.sec.instagramclone.data.common.onError
+import com.sec.instagramclone.data.common.onSuccess
+import com.sec.instagramclone.databinding.ActivityLauncherBinding
+import com.sec.instagramclone.ui.MainActivity
 import com.sec.instagramclone.ui.auth.AuthActivity
+import com.sec.instagramclone.ui.auth.LoginVM
+import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
+import com.sec.instagramclone.ui.common.extensions.launchActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LauncherActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLauncherBinding
+    private val viewModel by viewModels<LoginVM>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_launcher)
+        binding = ActivityLauncherBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        viewModel.loggedUser()
+        collectData()
 
-
-        redirectToNextScreen()
     }
 
-    private fun redirectToNextScreen() {
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                startActivity(Intent(this, AuthActivity::class.java).apply {
+    private fun collectData() {
+        collectLatestLifecycleFlow(viewModel.user) {
+            it?.onSuccess {
+                Handler(Looper.getMainLooper()).postDelayed({
+                startActivity(Intent(this, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 })
-            }, 3000
+            }, 2000
         )
 
     }
+
+
+            it?.onError { _, _ ->
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this, AuthActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
+                }, 2000
+                )
+            }
+        }
+    }
+
+
+
+
 }
