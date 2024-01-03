@@ -6,19 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.sec.instagramclone.R
 import com.sec.instagramclone.data.common.onError
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.ActivityLauncherBinding
-import com.sec.instagramclone.ui.MainActivity
+import com.sec.instagramclone.ui.main.MainActivity
 import com.sec.instagramclone.ui.auth.AuthActivity
 import com.sec.instagramclone.ui.auth.LoginVM
 import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
-import com.sec.instagramclone.ui.common.extensions.launchActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

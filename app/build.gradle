@@ -93,4 +93,7 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.1.0'
     implementation 'androidx.hilt:hilt-navigation-fragment:1.1.0'
 
+//picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
+
 }

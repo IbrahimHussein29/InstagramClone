@@ -14,7 +14,10 @@ interface AppRepository {
 
     fun getLoggedUser(): Flow<Resource<FirebaseUser>>
     fun getUserData(): Flow<Resource<UserBody>>
+    suspend fun updateUserData(user: UserBody)
 
     fun uploadImage(uri: Uri, folderName: String, callBack: (String?) -> Unit): Flow<Resource<Unit>>
+
+
 
 }

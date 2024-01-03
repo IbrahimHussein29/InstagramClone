@@ -145,6 +145,12 @@ class AppRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun updateUserData(user:UserBody) {
+        fireStoreDatabase.collection(Constants.USER_NODE)
+            .document(firebaseAuth.currentUser!!.uid)
+            .set(user).await()
+    }
+
     override fun uploadImage(
         uri: Uri,
         folderName: String,

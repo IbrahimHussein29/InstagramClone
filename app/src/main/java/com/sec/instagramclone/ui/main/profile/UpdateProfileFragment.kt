@@ -1,4 +1,4 @@
-package com.sec.instagramclone.ui.auth
+package com.sec.instagramclone.ui.main.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
@@ -15,24 +14,25 @@ import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onError
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentSignUpBinding
-import com.sec.instagramclone.ui.main.MainActivity
+import com.sec.instagramclone.databinding.FragmentUpdateProfileBinding
+import com.sec.instagramclone.ui.auth.LoginVM
 import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
 import com.sec.instagramclone.ui.common.extensions.isValidEmail
 import com.sec.instagramclone.ui.common.extensions.launchActivity
 import com.sec.instagramclone.ui.common.extensions.setImageUrl
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
+import com.sec.instagramclone.ui.main.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpFragment : Fragment() {
-    private var _binding: FragmentSignUpBinding? = null
+class UpdateProfileFragment : Fragment() {
+
+    private var _binding:FragmentUpdateProfileBinding? = null
     private val viewModel by viewModels<LoginVM>()
     private lateinit var user: UserBody
     private val binding get() = _binding!!
     private var imageUri: String? = null
-    private var email = ""
-    private var password = ""
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             viewModel.uploadImage(uri, Constants.USER_PROFILE_FOLDER) {
@@ -47,73 +47,76 @@ class SignUpFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSignUpBinding.inflate(layoutInflater)
+        _binding = FragmentUpdateProfileBinding.inflate(layoutInflater)
         viewModel.getUserData()
 
+        getProfileData()
         setClickListeners()
         return binding.root
     }
 
+    private fun getProfileData() {
+        collectLatestLifecycleFlow(viewModel.userData) { it ->
+            it?.onSuccess {
+                user = it
+                binding.nameEdtTxt.setText(user.name)
+                binding.emailEdtTxt.setText(user.email)
+                binding.emailEdtTxt.isEnabled=false
+                binding.passwordEdtTxt.setText(user.password)
+                imageUri= user.userImage
+                if (!user.userImage.isNullOrEmpty()) {
+                    Picasso.get().load(user.userImage).into(binding.profileImg)
+                }
 
+            }
+        }
+    }
 
     private fun setClickListeners() {
-        binding.btnRegister.setOnSafeClickListener {
+        binding.btnUpdateProfile.setOnSafeClickListener {
 
-
-                register()
-
-
+            updateUser()
         }
         binding.addImage.setOnSafeClickListener {
             launcher.launch("image/*")
 
         }
-        binding.textLogin.setOnSafeClickListener {
-            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-
-        }
-
-
     }
 
 
-
-
-
-    private fun register() {
-        email = binding.emailEdtTxt.text.toString()
-        password = binding.passwordEdtTxt.text.toString()
+    private fun updateUser() {
 
         val user = UserBody(
             name = binding.nameEdtTxt.text.toString(),
             email = binding.emailEdtTxt.text.toString(),
             password = binding.passwordEdtTxt.text.toString(),
-            userImage = imageUri
+          userImage = imageUri
+
+
+
         )
+        if (validateUser(user)) {
 
-        if (validateRegister(user)) {
-            viewModel.register(email, password, user)
-            collectData()
+
+            collectLatestLifecycleFlow(viewModel.userData) {
+
+                it?.onSuccess {
+                    viewModel.updateUserData(user)
+                    findNavController().navigate(R.id.profileFragment)
+
+                }
+                it?.onError { _, _ ->
+                    binding.emailEdtTxt.error =
+                        resources.getString(R.string.email_address_already_exists)
+                }
+            }
         }
     }
 
-    private fun collectData() {
-        collectLatestLifecycleFlow(viewModel.user) {
-            it?.onSuccess {
-                launchActivity<MainActivity> { }
-                requireActivity().finish()
-            }
-            it?.onError { _, _ ->
-                binding.emailEdtTxt.error =
-                    resources.getString(R.string.email_address_already_exists)
-            }
-        }
-
-    }
-
-    private fun validateRegister(user: UserBody): Boolean {
+    private fun validateUser(user: UserBody): Boolean {
         var valid = true
         if (user.name.isEmpty()) {
             binding.nameEdtTxt.error = resources.getString(R.string.missing_data)
