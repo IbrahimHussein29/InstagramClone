@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
+
     app:startDestination="@id/homeFragment">
 
     <fragment
@@ -15,9 +16,9 @@
         android:name="com.sec.instagramclone.ui.main.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
-    <fragment
+    <dialog
         android:id="@+id/addFragment"
-        android:name="com.sec.instagramclone.ui.main.AddFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" />
     <fragment
@@ -36,6 +37,26 @@
         android:name="com.sec.instagramclone.ui.main.profile.UpdateProfileFragment"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" />
+    <fragment
+        android:id="@+id/profilePostsFragment"
+        android:name="com.sec.instagramclone.ui.main.profile.ProfilePostsFragment"
+        android:label="fragment_profile_posts"
+        tools:layout="@layout/fragment_profile_posts" />
+    <fragment
+        android:id="@+id/profileReelsFragment"
+        android:name="com.sec.instagramclone.ui.main.profile.ProfileReelsFragment"
+        android:label="fragment_profile_reels"
+        tools:layout="@layout/fragment_profile_reels" />
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/addReelsFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.AddReelsFragment"
+        android:label="fragment_add_reels"
+        tools:layout="@layout/fragment_add_reels" />
 
 
 </navigation>

@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.AddFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small_2"
+    tools:context=".ui.main.upload.AddFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/upload_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_margin="@dimen/margin_small_2"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/upload_post_img"
+            android:layout_width="@dimen/add_image_size"
+            android:layout_height="@dimen/add_image_size"
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_upload_picture"
+            android:tint="@color/inverted_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/add_post"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/upload_reels"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_small_2"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/upload_reel_img"
+            android:layout_width="@dimen/add_image_size"
+            android:layout_height="@dimen/add_image_size"
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_add_video"
+            android:tint="@color/inverted_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Add Reels"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

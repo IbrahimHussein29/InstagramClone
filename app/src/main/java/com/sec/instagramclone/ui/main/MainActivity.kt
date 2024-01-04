@@ -1,7 +1,7 @@
 package com.sec.instagramclone.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.sec.instagramclone.R
@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
     private val navHostFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.fragment_container_view_main) as NavHostFragment
     }

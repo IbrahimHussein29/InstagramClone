@@ -26,4 +26,10 @@
     <string name="bio">bio</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="update_profile">Update Profile</string>
+    <string name="add_post">Add Post</string>
+    <string name="write_a_caption">Write a caption</string>
+    <string name="share_to_post">Share to Post</string>
+    <string name="your_post">Your post maybe appear in Posts and can be seen on the posts tab under your profile</string>
+    <string name="post">Post</string>
+    <string name="cancel">Cancel</string>
 </resources>

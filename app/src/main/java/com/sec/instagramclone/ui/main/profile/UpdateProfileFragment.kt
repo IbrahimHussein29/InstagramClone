@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class UpdateProfileFragment : Fragment() {
 
     private var _binding:FragmentUpdateProfileBinding? = null
-    private val viewModel by viewModels<LoginVM>()
+    private val viewModel by viewModels<ProfileVM>()
     private lateinit var user: UserBody
     private val binding get() = _binding!!
     private var imageUri: String? = null

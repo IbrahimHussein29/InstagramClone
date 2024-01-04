@@ -109,10 +109,7 @@ class LoginVM @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
-     suspend fun updateUserData(user:UserBody){
-        appRepositoryImpl.updateUserData(user)
 
-    }
 
     fun uploadImage(uri: Uri, folder: String, callBack: (String?) -> Unit) {
         appRepositoryImpl.uploadImage(uri, folder, callBack).onEach {

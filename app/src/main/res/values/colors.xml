@@ -6,4 +6,5 @@
     <color name="gray">#878585</color>
     <color name="color_primary">#1E88E5</color>
     <color name="light_black">#454545</color>
+    <color name="inverted_gray">#565656</color>
 </resources>
