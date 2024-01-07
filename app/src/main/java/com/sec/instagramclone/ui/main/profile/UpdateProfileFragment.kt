@@ -1,27 +1,24 @@
 package com.sec.instagramclone.ui.main.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.Constants
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onError
 import com.sec.instagramclone.data.common.onSuccess
-import com.sec.instagramclone.databinding.FragmentSignUpBinding
 import com.sec.instagramclone.databinding.FragmentUpdateProfileBinding
-import com.sec.instagramclone.ui.auth.LoginVM
 import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
 import com.sec.instagramclone.ui.common.extensions.isValidEmail
-import com.sec.instagramclone.ui.common.extensions.launchActivity
 import com.sec.instagramclone.ui.common.extensions.setImageUrl
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
-import com.sec.instagramclone.ui.main.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +65,7 @@ class UpdateProfileFragment : Fragment() {
                 binding.passwordEdtTxt.setText(user.password)
                 imageUri= user.userImage
                 if (!user.userImage.isNullOrEmpty()) {
-                    Picasso.get().load(user.userImage).into(binding.profileImg)
+                    binding.profileImg.setImageUrl(user.userImage)
                 }
 
             }
@@ -99,12 +96,12 @@ class UpdateProfileFragment : Fragment() {
 
         )
         if (validateUser(user)) {
-
+            viewModel.updateUserData(user)
 
             collectLatestLifecycleFlow(viewModel.userData) {
 
                 it?.onSuccess {
-                    viewModel.updateUserData(user)
+
                     findNavController().navigate(R.id.profileFragment)
 
                 }

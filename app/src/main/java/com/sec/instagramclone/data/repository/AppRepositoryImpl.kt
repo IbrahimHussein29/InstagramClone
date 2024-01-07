@@ -6,17 +6,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.sec.instagramclone.data.Constants
+import com.sec.instagramclone.data.body.PostBody
+import com.sec.instagramclone.data.body.ReelBody
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.Resource
 import com.sec.instagramclone.data.common.await
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-
 import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
@@ -145,10 +146,28 @@ class AppRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun updateUserData(user:UserBody) {
-        fireStoreDatabase.collection(Constants.USER_NODE)
-            .document(firebaseAuth.currentUser!!.uid)
-            .set(user).await()
+    override fun updateUserData(user: UserBody): Flow<Resource<UserBody>> {
+
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result = fireStoreDatabase.collection(Constants.USER_NODE)
+                    .document(firebaseAuth.currentUser!!.uid)
+                    .set(user).await()
+                emit(Resource.Success(data = user))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+
     }
 
     override fun uploadImage(
@@ -176,4 +195,179 @@ class AppRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun postImage(post: PostBody): Flow<Resource<PostBody>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result = fireStoreDatabase.collection(Constants.POST)
+                    .document()
+                    .set(post).await()
+                fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).document().set(post)
+                    .await()
+                emit(Resource.Success(data = post))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+
+    override fun addPostToProfile(post: PostBody): Flow<Resource<ArrayList<PostBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).get().await()
+                var postList = arrayListOf<PostBody>()
+                var tempList = arrayListOf<PostBody>()
+                for (i in result.documents) {
+                    var post: PostBody = i.toObject<PostBody>()!!
+                    tempList.add(post)
+                }
+                postList.addAll(tempList)
+                postList.reverse()
+                emit(Resource.Success(data = postList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun addReelToProfile(reel: ReelBody): Flow<Resource<ArrayList<ReelBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL)
+                        .get().await()
+                var reelList = arrayListOf<ReelBody>()
+                var tempList = arrayListOf<ReelBody>()
+                for (i in result.documents) {
+                    var reel: ReelBody = i.toObject<ReelBody>()!!
+                    tempList.add(reel)
+                }
+                reelList.addAll(tempList)
+                reelList.reverse()
+                emit(Resource.Success(data = reelList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun uploadReel(
+        uri: Uri,
+        folderName: String,
+        callBack: (String?) -> Unit
+    ): Flow<Resource<Unit>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+//               var progressDialog: ProgressDialog= ProgressDialog(this)
+//                var uploadedValue:Long= 0
+                val snapshot = FirebaseStorage.getInstance().getReference(folderName)
+                    .child(UUID.randomUUID().toString()).putFile(uri).await()
+                val videoUrl = snapshot.storage.downloadUrl.await()
+//                uploadedValue=(snapshot.bytesTransferred)/(snapshot.totalByteCount)
+//                progressDialog.setMessage("Uploaded $uploadedValue")
+
+
+                emit(Resource.Success(callBack(videoUrl.toString())))
+
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }
+    }
+
+
+    override fun postReel(reel: ReelBody): Flow<Resource<ReelBody>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result = fireStoreDatabase.collection(Constants.REEL)
+                    .document()
+                    .set(reel).await()
+                fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL)
+                    .document().set(reel)
+                    .await()
+                emit(Resource.Success(data = reel))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun getReel(reel: ReelBody): Flow<Resource<ArrayList<ReelBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(Constants.REEL).get().await()
+                var reelList = arrayListOf<ReelBody>()
+                var tempList = arrayListOf<ReelBody>()
+                for (i in result.documents) {
+                    var reel: ReelBody = i.toObject<ReelBody>()!!
+                    tempList.add(reel)
+                }
+                reelList.addAll(tempList)
+                reelList.reverse()
+
+                emit(Resource.Success(data = reelList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+
 }

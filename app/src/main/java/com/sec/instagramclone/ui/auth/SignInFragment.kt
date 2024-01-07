@@ -49,15 +49,15 @@ class SignInFragment : Fragment() {
     private fun login() {
 
 
-            email = binding.emailEdtTxt.text.toString()
-            password = binding.passwordEdtTxt.text.toString()
+        email = binding.emailEdtTxt.text.toString()
+        password = binding.passwordEdtTxt.text.toString()
 
 
         if (validateLogin(email, password)) {
 
             viewModel.login(email, password)
-             collectData()
-}
+            collectData()
+        }
 
 
     }
@@ -69,14 +69,14 @@ class SignInFragment : Fragment() {
                 launchActivity<MainActivity> { }
                 requireActivity().finish()
             }
-               it?.onError { _, _ ->
-                   findNavController().navigate(R.id.invalidEmailPasswordDialogFragment)
-               }
+            it?.onError { _, _ ->
+                findNavController().navigate(R.id.invalidEmailPasswordDialogFragment)
+            }
         }
 
     }
 
-    private fun validateLogin(email:String, password:String): Boolean {
+    private fun validateLogin(email: String, password: String): Boolean {
         var valid = true
         if (!email.isValidEmail()) {
             binding.emailEdtTxt.error = resources.getString(R.string.invalid_email_address)

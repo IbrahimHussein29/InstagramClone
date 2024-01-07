@@ -17,13 +17,13 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <dialog
-        android:id="@+id/addFragment"
-        android:name="com.sec.instagramclone.ui.main.upload.AddFragment"
+        android:id="@+id/uploadFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.UploadFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_upload" />
     <fragment
         android:id="@+id/reelsFragment"
-        android:name="com.sec.instagramclone.ui.main.ReelsFragment"
+        android:name="com.sec.instagramclone.ui.main.reels.ReelsFragment"
         android:label="fragment_reels"
         tools:layout="@layout/fragment_reels" />
     <fragment
@@ -39,24 +39,24 @@
         tools:layout="@layout/fragment_update_profile" />
     <fragment
         android:id="@+id/profilePostsFragment"
-        android:name="com.sec.instagramclone.ui.main.profile.ProfilePostsFragment"
+        android:name="com.sec.instagramclone.ui.main.profile.profilePosts.ProfilePostsFragment"
         android:label="fragment_profile_posts"
         tools:layout="@layout/fragment_profile_posts" />
     <fragment
         android:id="@+id/profileReelsFragment"
-        android:name="com.sec.instagramclone.ui.main.profile.ProfileReelsFragment"
+        android:name="com.sec.instagramclone.ui.main.profile.profileReels.ProfileReelsFragment"
         android:label="fragment_profile_reels"
         tools:layout="@layout/fragment_profile_reels" />
     <fragment
-        android:id="@+id/addPostFragment"
-        android:name="com.sec.instagramclone.ui.main.upload.AddPostFragment"
+        android:id="@+id/uploadPostFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.UploadPostFragment"
         android:label="fragment_add_post"
-        tools:layout="@layout/fragment_add_post" />
+        tools:layout="@layout/fragment_upload_post" />
     <fragment
-        android:id="@+id/addReelsFragment"
-        android:name="com.sec.instagramclone.ui.main.upload.AddReelsFragment"
+        android:id="@+id/uploadReelsFragment"
+        android:name="com.sec.instagramclone.ui.main.upload.UploadReelsFragment"
         android:label="fragment_add_reels"
-        tools:layout="@layout/fragment_add_reels" />
+        tools:layout="@layout/fragment_upload_reels" />
 
 
 </navigation>

@@ -18,7 +18,7 @@ import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentProfileBinding
 import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
-import com.sec.instagramclone.ui.main.profile.adapter.ViewPagerAdapter
+import com.sec.instagramclone.ui.main.profile.adapter.ProfileAdapter
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +47,7 @@ findNavController().popBackStack(R.id.updateProfileFragment, true)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
 
-        val myAdapter = ViewPagerAdapter(childFragmentManager, lifecycle)
+        val myAdapter = ProfileAdapter(childFragmentManager, lifecycle)
 
         viewPager.adapter = myAdapter
 
@@ -97,6 +97,7 @@ findNavController().popBackStack(R.id.updateProfileFragment, true)
                 binding.bio.text=user.email
                 if(!user.userImage.isNullOrEmpty()){
                     Picasso.get().load(user.userImage).into(binding.profileImg)
+                    binding.progressBar.visibility=View.GONE
                 }
 
             }

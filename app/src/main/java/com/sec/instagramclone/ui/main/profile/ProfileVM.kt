@@ -41,8 +41,23 @@ class ProfileVM @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    suspend fun updateUserData(user:UserBody){
-        appRepositoryImpl.updateUserData(user)
+   fun updateUserData(user:UserBody){
+        appRepositoryImpl.updateUserData(user).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    _userData.value = Resource.Loading()
+                }
+
+                is Resource.Error -> {
+                    _userData.value = Resource.Error(message = it.message ?: "")
+                }
+
+                is Resource.Success -> {
+                    _userData.value = Resource.Success(data = it.data)
+                }
+            }
+
+        }.launchIn(viewModelScope)
 
     }
 

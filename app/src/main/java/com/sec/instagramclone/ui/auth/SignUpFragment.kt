@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -21,18 +22,17 @@ import com.sec.instagramclone.ui.common.extensions.isValidEmail
 import com.sec.instagramclone.ui.common.extensions.launchActivity
 import com.sec.instagramclone.ui.common.extensions.setImageUrl
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<LoginVM>()
-    private lateinit var user: UserBody
     private val binding get() = _binding!!
     private var imageUri: String? = null
     private var email = ""
     private var password = ""
+
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             viewModel.uploadImage(uri, Constants.USER_PROFILE_FOLDER) {
@@ -57,12 +57,11 @@ class SignUpFragment : Fragment() {
     }
 
 
-
     private fun setClickListeners() {
         binding.btnRegister.setOnSafeClickListener {
 
 
-                register()
+            register()
 
 
         }
@@ -77,9 +76,6 @@ class SignUpFragment : Fragment() {
 
 
     }
-
-
-
 
 
     private fun register() {

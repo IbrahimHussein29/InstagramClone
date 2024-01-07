@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.upload.UploadReelsFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="New Reel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_reel_btn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small_2"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:text="Select Reel"
+        android:textAllCaps="false"
+        android:textColor="@color/inverted_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materialToolbar"
+
+        />
+
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+
+        android:id="@+id/caption_edt_txt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/caption_height"
+        android:layout_marginStart="@dimen/margin_small_2"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:layout_marginEnd="@dimen/margin_small_2"
+        android:background="@drawable/rounded_input"
+        android:hint="@string/write_a_caption"
+        android:inputType="text"
+        android:paddingHorizontal="@dimen/edt_txt_padding"
+        android:singleLine="true"
+        android:textColor="@color/inverted_gray"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_reel_btn"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/share_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small_2"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/caption_edt_txt">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/add_image_size"
+            android:layout_height="@dimen/add_image_size"
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_reel"
+            android:tint="@color/inverted_gray" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/share_to_reel"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:paddingStart="@dimen/padding_large"
+        android:paddingEnd="@dimen/padding_xxl"
+        android:text="@string/your_reel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share_post" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small_2"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_small_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_post_btn"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small_2"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/inverted_gray"
+            app:strokeColor="@color/pink"
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/post_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/color_primary"
+            android:text="@string/post"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
