@@ -21,43 +21,40 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
             android:src="@drawable/user"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/profile_img"
-            app:layout_constraintTop_toTopOf="@id/profile_img"
-            app:layout_constraintEnd_toEndOf="@id/profile_img"
             app:layout_constraintBottom_toBottomOf="@id/profile_img"
-            />
+            app:layout_constraintEnd_toEndOf="@id/profile_img"
+            app:layout_constraintStart_toStartOf="@id/profile_img"
+            app:layout_constraintTop_toTopOf="@id/profile_img" />
 
         <TextView
-            android:textColor="@color/app_color"
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginVertical="@dimen/margin_small"
             android:text="@string/name"
-            app:layout_constraintBottom_toTopOf="@id/bio"
-            app:layout_constraintStart_toEndOf="@id/profile_img"
-            app:layout_constraintTop_toTopOf="@id/profile_img"
-            app:layout_constraintVertical_chainStyle="packed" />
+            android:layout_marginStart="@dimen/margin_xl"
+            android:textColor="@color/app_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_img" />
 
         <TextView
-            android:textColor="@color/app_color"
             android:id="@+id/bio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginVertical="@dimen/margin_small"
             android:text="@string/bio"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/profile_img"
+            android:layout_marginStart="@dimen/margin_xl"
+            android:textColor="@color/app_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
         <com.google.android.material.button.MaterialButton
@@ -69,11 +66,11 @@
             android:text="@string/edit_profile"
             android:textColor="@color/white"
             android:textSize="@dimen/btn_text_size_medium"
+            app:layout_constraintBottom_toBottomOf="@id/profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintStart_toEndOf="@id/profile_img"
             app:layout_constraintTop_toTopOf="@id/profile_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/profile_img"
-            app:layout_constraintHorizontal_bias="0.92"
 
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,13 +78,12 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

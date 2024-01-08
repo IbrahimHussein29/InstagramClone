@@ -5,7 +5,7 @@ import java.io.Serializable
 data class PostBody(
     var postUsername: String = "",
     var postUserImage: String = "",
-    var _time: String = "",
+    var time: Long = 0,
     var postUrl: String = "",
     var caption: String = ""
 

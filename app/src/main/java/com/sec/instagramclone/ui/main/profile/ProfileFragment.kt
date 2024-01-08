@@ -98,6 +98,8 @@ findNavController().popBackStack(R.id.updateProfileFragment, true)
                 if(!user.userImage.isNullOrEmpty()){
                     Picasso.get().load(user.userImage).into(binding.profileImg)
                     binding.progressBar.visibility=View.GONE
+                }else{
+                    binding.progressBar.visibility=View.GONE
                 }
 
             }

@@ -21,6 +21,8 @@ class SearchVM@Inject constructor(
     val userData: StateFlow<Resource<ArrayList<UserBody>>?> = _userData
     private val _searchData = MutableStateFlow<Resource<ArrayList<UserBody>>?>(null)
     val searchData: StateFlow<Resource<ArrayList<UserBody>>?> = _searchData
+    private val _isFollowedData = MutableStateFlow<Resource<UserBody>?>(null)
+    val isFollowedData: StateFlow<Resource<UserBody>?> = _isFollowedData
 
     fun getAllUsers(user: UserBody) {
         appRepositoryImpl.getAllUsers(user).onEach {
@@ -54,6 +56,25 @@ class SearchVM@Inject constructor(
 
                 is Resource.Success -> {
                     _userData.value  = Resource.Success(data = it.data)
+                }
+            }
+
+        }.launchIn(viewModelScope)
+
+    }
+    fun isFollowedUser(isFollowed:Boolean, user: UserBody) {
+        appRepositoryImpl.followUsers(isFollowed, user).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    _isFollowedData.value = Resource.Loading()
+                }
+
+                is Resource.Error -> {
+                    _isFollowedData.value = Resource.Error(message = it.message ?: "")
+                }
+
+                is Resource.Success -> {
+                    _isFollowedData.value  = Resource.Success(data = it.data)
                 }
             }
 

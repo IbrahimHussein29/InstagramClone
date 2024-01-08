@@ -3,6 +3,7 @@ package com.sec.instagramclone.ui.main.upload
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sec.instagramclone.data.body.MediaBody
 import com.sec.instagramclone.data.body.PostBody
 import com.sec.instagramclone.data.body.ReelBody
 import com.sec.instagramclone.data.body.UserBody
@@ -70,8 +71,8 @@ class UploadVM @Inject constructor(private val appRepositoryImpl: AppRepositoryI
 
     }
 
-    fun postImage(post:PostBody){
-        appRepositoryImpl.postImage(post).onEach {
+    fun postImage(post:PostBody, media: MediaBody){
+        appRepositoryImpl.postImage(post, media).onEach {
 
             when (it) {
                 is Resource.Loading -> {
@@ -110,8 +111,8 @@ class UploadVM @Inject constructor(private val appRepositoryImpl: AppRepositoryI
 
     }
 
-    fun postReel(reel: ReelBody){
-        appRepositoryImpl.postReel(reel).onEach {
+    fun postReel(reel: ReelBody, media:MediaBody){
+        appRepositoryImpl.postReel( reel, media).onEach {
 
             when (it) {
                 is Resource.Loading -> {

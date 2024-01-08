@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.Constants
+import com.sec.instagramclone.data.body.MediaBody
 import com.sec.instagramclone.data.body.ReelBody
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onSuccess
@@ -112,9 +113,19 @@ class UploadReelsFragment : Fragment() {
                     videoUri!!,
                     binding.captionEdtTxt.text.toString(),
                     user.userImage,
-                    System.currentTimeMillis().toString()
+                    System.currentTimeMillis()
                 )
-                viewModel.postReel(reel)
+                val media=MediaBody(
+                    user.name,
+                    user.userImage,
+                    System.currentTimeMillis(),
+                    "",
+                    videoUri!!,
+                    binding.captionEdtTxt.text.toString()
+
+
+                )
+                viewModel.postReel(reel, media)
 
             }
         }

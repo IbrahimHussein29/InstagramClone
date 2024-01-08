@@ -13,15 +13,15 @@ class SearchVH(binding: CellSearchItemBinding) :
     fun bind(user: UserBody) {
         binding.profileImg.setImageCenteredCropped(user.userImage)
         binding.userName.text=user.name
-        var flag=true
+
 binding.followBtn.setOnClickListener {
 
-    if(flag){
+    if(user.isFollowed){
         binding.followBtn.text= context.resources.getText(R.string.un_follow)
-        flag= false
+        user.isFollowed= false
     }else{
         binding.followBtn.text= context.resources.getText(R.string.follow)
-        flag= true
+        user.isFollowed= true
     }
 
 }

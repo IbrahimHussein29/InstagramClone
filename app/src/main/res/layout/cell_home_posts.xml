@@ -20,7 +20,7 @@
             android:id="@+id/profile_img"
             android:layout_width="@dimen/add_image_size"
             android:layout_height="@dimen/add_image_size"
-            android:layout_marginStart="@dimen/margin_small"
+
             android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +65,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:contentDescription="@string/app_name"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/margin_small_2">
 
         <TextView
             android:id="@+id/caption_txt"
@@ -76,15 +93,7 @@
             android:textColor="@color/app_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post_img" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/margin_small_2">
-
+            app:layout_constraintTop_toTopOf="parent" />
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/like_img"
             android:layout_width="@dimen/add_icon_size"
@@ -93,7 +102,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_like"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/caption_txt"
             app:tint="@color/app_color" />
 
         <androidx.appcompat.widget.AppCompatImageView

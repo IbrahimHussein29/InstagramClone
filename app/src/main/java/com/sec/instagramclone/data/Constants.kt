@@ -7,7 +7,8 @@ object Constants {
     const val REEL_FOLDER="ReelsFolder"
     const val POST="Post"
     const val REEL="Reel"
-    const val FOLLOW="follow"
+    const val MEDIA="Media"
+    const val FOLLOW="Follow"
 
 
 }

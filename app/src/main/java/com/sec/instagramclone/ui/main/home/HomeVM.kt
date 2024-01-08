@@ -2,7 +2,8 @@ package com.sec.instagramclone.ui.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sec.instagramclone.data.body.PostBody
+import com.sec.instagramclone.data.body.MediaBody
+
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.Resource
 import com.sec.instagramclone.data.repository.AppRepositoryImpl
@@ -17,8 +18,8 @@ import javax.inject.Inject
 class HomeVM @Inject constructor(
     private val appRepositoryImpl: AppRepositoryImpl
 ) : ViewModel() {
-    private val _postData = MutableStateFlow<Resource<ArrayList<PostBody>>?>(null)
-    val postData: StateFlow<Resource<ArrayList<PostBody>>?> = _postData
+    private val _mediaData = MutableStateFlow<Resource<ArrayList<MediaBody>>?>(null)
+    val mediaData: StateFlow<Resource<ArrayList<MediaBody>>?> = _mediaData
 
     private val _userData = MutableStateFlow<Resource<UserBody>?>(null)
     val userData: StateFlow<Resource<UserBody>?> = _userData
@@ -42,19 +43,19 @@ class HomeVM @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getPosts(post: PostBody) {
-        appRepositoryImpl.getPost(post).onEach {
+    fun getAllMedia(media: MediaBody) {
+        appRepositoryImpl.getMedia(media).onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _postData.value = Resource.Loading()
+                    _mediaData.value = Resource.Loading()
                 }
 
                 is Resource.Error -> {
-                    _postData.value = Resource.Error(message = it.message ?: "")
+                    _mediaData.value = Resource.Error(message = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _postData.value = Resource.Success(data = it.data)
+                    _mediaData.value= Resource.Success(data = it.data)
                 }
             }
 

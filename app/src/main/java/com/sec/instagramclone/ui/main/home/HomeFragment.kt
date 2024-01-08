@@ -12,7 +12,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
-import com.sec.instagramclone.data.body.PostBody
+import com.sec.instagramclone.data.body.MediaBody
+
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentHomeBinding
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
         viewModel.getUserData()
         collectUserProfileData()
         binding.homeRecyclerView.adapter = adapter
-        viewModel.getPosts(PostBody())
+        viewModel.getAllMedia(MediaBody())
         collectPostData()
     }
 
@@ -73,10 +74,10 @@ class HomeFragment : Fragment() {
 
 
     private fun collectPostData() {
-        collectLatestLifecycleFlow(viewModel.postData) {
+        collectLatestLifecycleFlow(viewModel.mediaData) {
             it?.onSuccess {
 
-                adapter.items = it
+                adapter.items =it
                 adapter.notifyDataSetChanged()
             }
 
@@ -112,7 +113,7 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.uploadFragment)
     }
 
-    private fun handleItemClicked(item: PostBody) {
+    private fun handleItemClicked(item: MediaBody) {
 //        when (item) {
 //            is PostBody -> {
 //

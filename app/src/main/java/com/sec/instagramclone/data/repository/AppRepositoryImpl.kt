@@ -4,12 +4,12 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.auth
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.sec.instagramclone.data.Constants
+import com.sec.instagramclone.data.body.MediaBody
 import com.sec.instagramclone.data.body.PostBody
 import com.sec.instagramclone.data.body.ReelBody
 import com.sec.instagramclone.data.body.UserBody
@@ -23,6 +23,7 @@ import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
 
+@Suppress("NAME_SHADOWING")
 class AppRepositoryImpl @Inject constructor(
 
 ) : AppRepository {
@@ -152,7 +153,7 @@ class AppRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
-                val result = fireStoreDatabase.collection(Constants.USER_NODE)
+                 fireStoreDatabase.collection(Constants.USER_NODE)
                     .document(firebaseAuth.currentUser!!.uid)
                     .set(user).await()
                 emit(Resource.Success(data = user))
@@ -197,15 +198,16 @@ class AppRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun postImage(post: PostBody): Flow<Resource<PostBody>> {
+    override fun postImage(post: PostBody, media: MediaBody): Flow<Resource<PostBody>> {
         return flow {
             emit(Resource.Loading())
             try {
-                val result = fireStoreDatabase.collection(Constants.POST)
+            fireStoreDatabase.collection(Constants.POST)
                     .document()
                     .set(post).await()
                 fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).document().set(post)
                     .await()
+                fireStoreDatabase.collection(Constants.MEDIA).document().set(media).await()
                 emit(Resource.Success(data = post))
             } catch (e: HttpException) {
                 emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
@@ -228,10 +230,10 @@ class AppRepositoryImpl @Inject constructor(
             try {
                 val result =
                     fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).get().await()
-                var postList = arrayListOf<PostBody>()
-                var tempList = arrayListOf<PostBody>()
+                val postList = arrayListOf<PostBody>()
+                val tempList = arrayListOf<PostBody>()
                 for (i in result.documents) {
-                    var post: PostBody = i.toObject<PostBody>()!!
+                    val post: PostBody = i.toObject<PostBody>()!!
                     tempList.add(post)
                 }
                 postList.addAll(tempList)
@@ -258,10 +260,10 @@ class AppRepositoryImpl @Inject constructor(
                 val result =
                     fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL)
                         .get().await()
-                var reelList = arrayListOf<ReelBody>()
-                var tempList = arrayListOf<ReelBody>()
+                val reelList = arrayListOf<ReelBody>()
+                val tempList = arrayListOf<ReelBody>()
                 for (i in result.documents) {
-                    var reel: ReelBody = i.toObject<ReelBody>()!!
+                    val reel: ReelBody = i.toObject<ReelBody>()!!
                     tempList.add(reel)
                 }
                 reelList.addAll(tempList)
@@ -315,16 +317,18 @@ class AppRepositoryImpl @Inject constructor(
     }
 
 
-    override fun postReel(reel: ReelBody): Flow<Resource<ReelBody>> {
+    override fun postReel( reel: ReelBody, media:MediaBody): Flow<Resource<ReelBody>> {
         return flow {
             emit(Resource.Loading())
             try {
-                val result = fireStoreDatabase.collection(Constants.REEL)
+                fireStoreDatabase.collection(Constants.REEL)
                     .document()
                     .set(reel).await()
                 fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL)
                     .document().set(reel)
                     .await()
+                fireStoreDatabase.collection(Constants.MEDIA).document().set(media).await()
+
                 emit(Resource.Success(data = reel))
             } catch (e: HttpException) {
                 emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
@@ -346,10 +350,10 @@ class AppRepositoryImpl @Inject constructor(
             try {
                 val result =
                     fireStoreDatabase.collection(Constants.REEL).get().await()
-                var reelList = arrayListOf<ReelBody>()
-                var tempList = arrayListOf<ReelBody>()
+                val reelList = arrayListOf<ReelBody>()
+                val tempList = arrayListOf<ReelBody>()
                 for (i in result.documents) {
-                    var reel: ReelBody = i.toObject<ReelBody>()!!
+                    val reel: ReelBody = i.toObject<ReelBody>()!!
                     tempList.add(reel)
                 }
                 reelList.addAll(tempList)
@@ -369,22 +373,26 @@ class AppRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
     }
-    override fun getPost(reel: PostBody): Flow<Resource<ArrayList<PostBody>>> {
+    override fun getMedia(media: MediaBody): Flow<Resource<ArrayList<MediaBody>>> {
         return flow {
             emit(Resource.Loading())
             try {
                 val result =
-                    fireStoreDatabase.collection(Constants.POST).get().await()
-                var postList = arrayListOf<PostBody>()
-                var tempList = arrayListOf<PostBody>()
+                    fireStoreDatabase.collection(Constants.MEDIA).get().await()
+                val mediaList = arrayListOf<MediaBody>()
+                val tempList = arrayListOf<MediaBody>()
                 for (i in result.documents) {
-                    var post: PostBody = i.toObject<PostBody>()!!
-                    tempList.add(post)
-                }
-               postList.addAll(tempList)
-               postList.reverse()
+                    val media: MediaBody = i.toObject<MediaBody>()!!
+                    tempList.add(media)
 
-                emit(Resource.Success(data = postList))
+
+                }
+
+                mediaList.addAll(tempList)
+           mediaList.reverse()
+
+
+                emit(Resource.Success(data = mediaList))
             } catch (e: HttpException) {
                 emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
             } catch (e: IOException) {
@@ -399,17 +407,18 @@ class AppRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+
     override fun getAllUsers(user: UserBody): Flow<Resource<ArrayList<UserBody>>> {
         return flow {
             emit(Resource.Loading())
             try {
                 val result =
                     fireStoreDatabase.collection(Constants.USER_NODE).get().await()
-                var userList = arrayListOf<UserBody>()
-                var tempList = arrayListOf<UserBody>()
+                val userList = arrayListOf<UserBody>()
+                val tempList = arrayListOf<UserBody>()
                 for (i in result.documents) {
-                    if(!i.id.equals(firebaseAuth.currentUser!!.uid)){
-                        var user: UserBody = i.toObject<UserBody>()!!
+                    if(i.id != firebaseAuth.currentUser!!.uid){
+                        val user: UserBody = i.toObject<UserBody>()!!
 
                         tempList.add(user)
                     }
@@ -439,13 +448,12 @@ class AppRepositoryImpl @Inject constructor(
             try {
                 val result =
                     fireStoreDatabase.collection(Constants.USER_NODE).whereEqualTo("name",name).get().await()
-                if(result.isEmpty) {
-                }else{
-                    var userList = arrayListOf<UserBody>()
-                    var tempList = arrayListOf<UserBody>()
+                if(!result.isEmpty) {
+                    val userList = arrayListOf<UserBody>()
+                    val tempList = arrayListOf<UserBody>()
                     for (i in result.documents) {
-                        if(!i.id.equals(firebaseAuth.currentUser!!.uid)){
-                            var user: UserBody = i.toObject<UserBody>()!!
+                        if(i.id != firebaseAuth.currentUser!!.uid){
+                            val user: UserBody = i.toObject<UserBody>()!!
 
                             tempList.add(user)
                         }
@@ -456,6 +464,39 @@ class AppRepositoryImpl @Inject constructor(
 
                     emit(Resource.Success(data = userList))
                 }
+
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun followUsers(
+        isFollowed: Boolean,
+        user: UserBody
+    ): Flow<Resource<UserBody>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                if(isFollowed) {
+                    val result =
+                        fireStoreDatabase.collection(FirebaseAuth.getInstance().currentUser!!.uid +Constants.FOLLOW).document().set(user).await()
+
+                    emit(Resource.Success(data = user))
+                }else{
+                    val result =
+                    fireStoreDatabase.collection(FirebaseAuth.getInstance().currentUser!!.uid +Constants.FOLLOW).document().delete().await()
+                    emit(Resource.Success(data = user))
+                }
+
 
             } catch (e: HttpException) {
                 emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))

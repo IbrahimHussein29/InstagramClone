@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.Constants
+import com.sec.instagramclone.data.body.MediaBody
 import com.sec.instagramclone.data.body.PostBody
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onSuccess
@@ -30,13 +31,13 @@ class UploadPostFragment : Fragment() {
     private val binding get() = _binding!!
     private var imageUri: String? = null
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        binding.progressBar.visibility=View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
         uri?.let {
             viewModel.uploadImage(uri, Constants.POST_FOLDER) {
                 binding.postImg.setImageCenteredCropped(it)
                 if (it != null) {
                     imageUri = it
-                    binding.progressBar.visibility=View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
             }
 
@@ -84,11 +85,20 @@ class UploadPostFragment : Fragment() {
                 val post = PostBody(
                     user.name,
                     user.userImage.toString(),
-                    System.currentTimeMillis().toString(),
+                    System.currentTimeMillis(),
                     imageUri!!,
                     binding.captionEdtTxt.text.toString()
                 )
-                viewModel.postImage(post)
+                val media = MediaBody(
+                    user.name,
+                    user.userImage,
+                    System.currentTimeMillis(),
+                    imageUri!!,
+                    "",
+                    binding.captionEdtTxt.text.toString()
+
+                )
+                viewModel.postImage(post, media)
 
             }
         }

@@ -13,7 +13,7 @@ class ReelsVH(binding: CellReelsViewBinding) :
         binding.profileImg.setImageUrl(reel.profileLink)
         binding.captionTxt.text = reel.reelCaption
         try {
-            val text = TimeAgo.using(reel._time.toLong())
+            val text = TimeAgo.using(reel.time.toLong())
             binding.timeTxt.text=text
         }catch (e:Exception){
             binding.timeTxt.text=""

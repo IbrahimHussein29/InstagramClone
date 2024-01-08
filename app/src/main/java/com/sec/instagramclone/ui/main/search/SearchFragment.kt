@@ -23,6 +23,7 @@ class SearchFragment : Fragment() {
 
     private var _binding:FragmentSearchBinding?= null
     private val viewModel by viewModels<SearchVM>()
+    var flag=true
     private val adapter by lazy {
         SearchAdapter(arrayListOf())
     }
