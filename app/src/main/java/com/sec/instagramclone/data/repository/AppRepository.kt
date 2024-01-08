@@ -1,7 +1,5 @@
 package com.sec.instagramclone.data.repository
 
-import android.app.ProgressDialog
-import android.content.Context
 import android.net.Uri
 import com.google.firebase.auth.FirebaseUser
 import com.sec.instagramclone.data.body.PostBody
@@ -22,7 +20,7 @@ interface AppRepository {
 
 
     fun uploadImage(uri: Uri, folderName: String, callBack: (String?) -> Unit): Flow<Resource<Unit>>
-    fun postImage(post:PostBody):Flow<Resource<PostBody>>
+    fun postImage(post: PostBody):Flow<Resource<PostBody>>
     fun addPostToProfile(post:PostBody):Flow<Resource<ArrayList<PostBody>>>
 
     fun addReelToProfile(reel:ReelBody):Flow<Resource<ArrayList<ReelBody>>>
@@ -32,7 +30,9 @@ interface AppRepository {
 
     fun postReel(reel: ReelBody):Flow<Resource<ReelBody>>
     fun getReel(reel:ReelBody):Flow<Resource<ArrayList<ReelBody>>>
-
+    fun getPost(reel:PostBody):Flow<Resource<ArrayList<PostBody>>>
+    fun getAllUsers(user:UserBody):Flow<Resource<ArrayList<UserBody>>>
+    fun searchUsers(name:String, user:UserBody):Flow<Resource<ArrayList<UserBody>>>
 
 
 }

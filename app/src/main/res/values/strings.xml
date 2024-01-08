@@ -36,4 +36,8 @@
     <string name="share_to_reel">Share to Reel</string>
     <string name="reel_uploaded_successfully">Reel uploaded successfully</string>
     <string name="uploading..">"Uploading . . ."</string>
+    <string name="time">time</string>
+    <string name="add_reels">Add Reels</string>
+    <string name="follow">Follow</string>
+    <string name="un_follow">UnFollow</string>
 </resources>

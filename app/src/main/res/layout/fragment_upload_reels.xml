@@ -10,6 +10,7 @@
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:titleTextColor="@color/app_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,12 +22,12 @@
         android:id="@+id/add_reel_btn"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_input_height"
         android:layout_margin="@dimen/margin_small_2"
         android:layout_marginTop="@dimen/margin_xl"
         android:text="Select Reel"
         android:textAllCaps="false"
-        android:textColor="@color/inverted_gray"
+        android:textColor="@color/app_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/materialToolbar"
@@ -39,7 +40,7 @@
 
         android:id="@+id/caption_edt_txt"
         android:layout_width="0dp"
-        android:layout_height="@dimen/caption_height"
+        android:layout_height="@dimen/text_input_height"
         android:layout_marginStart="@dimen/margin_small_2"
         android:layout_marginTop="@dimen/margin_xl"
         android:layout_marginEnd="@dimen/margin_small_2"
@@ -48,8 +49,8 @@
         android:inputType="text"
         android:paddingHorizontal="@dimen/edt_txt_padding"
         android:singleLine="true"
-        android:textColor="@color/inverted_gray"
-        android:textColorHint="@color/gray"
+        android:textColor="@color/app_color"
+        android:textColorHint="@color/app_color"
         android:textSize="@dimen/btn_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +73,10 @@
             android:layout_height="@dimen/add_image_size"
             android:padding="@dimen/margin_small"
             android:src="@drawable/ic_reel"
-            android:tint="@color/inverted_gray" />
+            app:tint="@color/app_color" />
 
         <TextView
+            android:textColor="@color/app_color"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_large"
@@ -88,6 +90,7 @@
     </LinearLayout>
 
     <TextView
+        android:textColor="@color/app_color"
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +119,7 @@
             android:layout_weight="1"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:textColor="@color/inverted_gray"
+            android:textColor="@color/app_color"
             app:strokeColor="@color/pink"
 
             />

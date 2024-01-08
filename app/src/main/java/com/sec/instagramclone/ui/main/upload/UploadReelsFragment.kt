@@ -111,7 +111,8 @@ class UploadReelsFragment : Fragment() {
                 val reel = ReelBody(
                     videoUri!!,
                     binding.captionEdtTxt.text.toString(),
-                    user.userImage
+                    user.userImage,
+                    System.currentTimeMillis().toString()
                 )
                 viewModel.postReel(reel)
 

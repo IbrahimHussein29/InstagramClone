@@ -6,12 +6,14 @@
             android:icon="@drawable/ic_like"
             android:title="like"
             app:showAsAction="always"
+           app:iconTint="@color/app_color"
            />
     <item
         android:id="@+id/message"
         android:icon="@drawable/ic_send"
         android:title="message"
         app:showAsAction="always"
+        app:iconTint="@color/app_color"
         />
 
 </menu>

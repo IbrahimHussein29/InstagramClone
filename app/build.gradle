@@ -100,4 +100,7 @@ dependencies {
     // roundedImage
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
+    //timeAgo
+    implementation ("com.github.marlonlom:timeago:4.0.3")
+
 }

@@ -18,7 +18,6 @@ import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentUploadPostBinding
 import com.sec.instagramclone.ui.common.extensions.collectLatestLifecycleFlow
 import com.sec.instagramclone.ui.common.extensions.setImageCenteredCropped
-import com.sec.instagramclone.ui.common.extensions.setImageUrl
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
 import com.sec.instagramclone.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,6 +83,8 @@ class UploadPostFragment : Fragment() {
                 user = it
                 val post = PostBody(
                     user.name,
+                    user.userImage.toString(),
+                    System.currentTimeMillis().toString(),
                     imageUri!!,
                     binding.captionEdtTxt.text.toString()
                 )

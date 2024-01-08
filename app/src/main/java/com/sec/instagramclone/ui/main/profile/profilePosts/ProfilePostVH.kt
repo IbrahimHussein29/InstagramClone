@@ -7,7 +7,7 @@ import com.sec.instagramclone.ui.common.viewHolder.BindingViewHolder
 
 class ProfilePostVH(binding: CellPostItemBinding) :
     BindingViewHolder<CellPostItemBinding>(binding) {
-        fun bind(post:PostBody){
+        fun bind(post: PostBody){
             binding.postImg.setImageCenteredCropped(post.postUrl)
         }
 

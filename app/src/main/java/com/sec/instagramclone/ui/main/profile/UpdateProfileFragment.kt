@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.Constants
 import com.sec.instagramclone.data.body.UserBody

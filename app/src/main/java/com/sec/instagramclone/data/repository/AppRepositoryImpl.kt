@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -355,6 +356,107 @@ class AppRepositoryImpl @Inject constructor(
                 reelList.reverse()
 
                 emit(Resource.Success(data = reelList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    override fun getPost(reel: PostBody): Flow<Resource<ArrayList<PostBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(Constants.POST).get().await()
+                var postList = arrayListOf<PostBody>()
+                var tempList = arrayListOf<PostBody>()
+                for (i in result.documents) {
+                    var post: PostBody = i.toObject<PostBody>()!!
+                    tempList.add(post)
+                }
+               postList.addAll(tempList)
+               postList.reverse()
+
+                emit(Resource.Success(data = postList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun getAllUsers(user: UserBody): Flow<Resource<ArrayList<UserBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(Constants.USER_NODE).get().await()
+                var userList = arrayListOf<UserBody>()
+                var tempList = arrayListOf<UserBody>()
+                for (i in result.documents) {
+                    if(!i.id.equals(firebaseAuth.currentUser!!.uid)){
+                        var user: UserBody = i.toObject<UserBody>()!!
+
+                        tempList.add(user)
+                    }
+
+                    }
+                userList.addAll(tempList)
+
+
+                emit(Resource.Success(data = userList))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
+            } catch (e: IOException) {
+                emit(
+                    Resource.Error(
+                        message = e.localizedMessage ?: "Check Your Internet Connection"
+                    )
+                )
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.localizedMessage ?: ""))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun searchUsers(name:String, user: UserBody): Flow<Resource<ArrayList<UserBody>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    fireStoreDatabase.collection(Constants.USER_NODE).whereEqualTo("name",name).get().await()
+                if(result.isEmpty) {
+                }else{
+                    var userList = arrayListOf<UserBody>()
+                    var tempList = arrayListOf<UserBody>()
+                    for (i in result.documents) {
+                        if(!i.id.equals(firebaseAuth.currentUser!!.uid)){
+                            var user: UserBody = i.toObject<UserBody>()!!
+
+                            tempList.add(user)
+                        }
+
+                    }
+                    userList.addAll(tempList)
+
+
+                    emit(Resource.Success(data = userList))
+                }
+
             } catch (e: HttpException) {
                 emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error"))
             } catch (e: IOException) {

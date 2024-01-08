@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.SearchFragment">
+    tools:context=".ui.main.search.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/text_edt_margin_xxxl"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        android:background="@drawable/rounded_input"
+        android:hint="@string/search"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/margin_normal"
+        android:drawableTint="@color/app_color"
+        android:inputType="text"
+        android:paddingHorizontal="@dimen/edt_txt_padding"
+        android:singleLine="true"
+        android:textColor="@color/app_color"
+        android:textColorHint="@color/app_color"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/margin_normal"
+        android:paddingHorizontal="@dimen/margin_normal"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

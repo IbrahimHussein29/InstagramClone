@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="app_color">#FF000000</color>
+    <color name="app_color">#FAF9F6</color>
+
     <color name="pink">#E1306C</color>
     <color name="gray">#878585</color>
     <color name="color_primary">#1E88E5</color>

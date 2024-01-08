@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_normal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_small_2">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_img"
+            android:layout_width="@dimen/add_image_size"
+            android:layout_height="@dimen/add_image_size"
+            android:layout_marginStart="@dimen/margin_small"
+            android:src="@drawable/user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:text="@string/name"
+            android:textColor="@color/app_color"
+            app:layout_constraintStart_toEndOf="@id/profile_img"
+            app:layout_constraintTop_toTopOf="@id/profile_img"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textColor="@color/app_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/post_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/post_img"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_loading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/caption_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small_2"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/write_a_caption"
+            android:textColor="@color/app_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_img" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/margin_small_2">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/like_img"
+            android:layout_width="@dimen/add_icon_size"
+            android:layout_height="@dimen/add_icon_size"
+            android:layout_marginTop="@dimen/margin_small_2"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_like"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/app_color" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cmt_img"
+            android:layout_width="@dimen/add_icon_size"
+            android:layout_height="@dimen/add_icon_size"
+            android:layout_marginStart="@dimen/margin_small_2"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_commant"
+            app:layout_constraintStart_toEndOf="@id/like_img"
+            app:layout_constraintTop_toTopOf="@id/like_img"
+            app:tint="@color/app_color" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share_img"
+            android:layout_width="@dimen/add_icon_size"
+            android:layout_height="@dimen/add_icon_size"
+            android:layout_marginStart="@dimen/margin_small_2"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_share_2"
+            app:layout_constraintStart_toEndOf="@id/cmt_img"
+            app:layout_constraintTop_toTopOf="@id/like_img"
+            app:tint="@color/app_color" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/save_img"
+            android:layout_width="@dimen/add_icon_size"
+            android:layout_height="@dimen/add_icon_size"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/like_img"
+            app:tint="@color/app_color" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

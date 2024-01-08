@@ -34,57 +34,59 @@
         />
 
     <androidx.appcompat.widget.AppCompatEditText
-        app:layout_constraintTop_toBottomOf="@+id/profile_img"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/name_edt_txt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_input_height"
         android:layout_marginTop="@dimen/text_edt_margin_xxxl"
         android:background="@drawable/rounded_input"
         android:hint="@string/name_username"
         android:inputType="text"
-        android:singleLine="true"
-        android:textColor="@color/gray"
-        android:textColorHint="@color/gray"
-        android:textSize="@dimen/btn_text_size"
         android:paddingHorizontal="@dimen/edt_txt_padding"
+        android:singleLine="true"
+        android:textColor="@color/app_color"
+        android:textColorHint="@color/app_color"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_img"
 
         />
+
     <androidx.appcompat.widget.AppCompatEditText
-        app:layout_constraintTop_toBottomOf="@+id/name_edt_txt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/email_edt_txt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_input_height"
         android:layout_marginTop="@dimen/text_edt_margin_large"
         android:background="@drawable/rounded_input"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:singleLine="true"
-        android:textColor="@color/gray"
-        android:textColorHint="@color/gray"
-        android:textSize="@dimen/btn_text_size"
         android:paddingHorizontal="@dimen/edt_txt_padding"
+        android:singleLine="true"
+        android:textColor="@color/app_color"
+        android:textColorHint="@color/app_color"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_edt_txt"
 
         />
+
     <androidx.appcompat.widget.AppCompatEditText
-        app:layout_constraintTop_toBottomOf="@+id/email_edt_txt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/password_edt_txt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_input_height"
         android:layout_marginTop="@dimen/text_edt_margin_large"
         android:background="@drawable/rounded_input"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:singleLine="true"
-        android:textColor="@color/gray"
-        android:textColorHint="@color/gray"
-        android:textSize="@dimen/btn_text_size"
         android:paddingHorizontal="@dimen/edt_txt_padding"
+        android:singleLine="true"
+        android:textColor="@color/app_color"
+        android:textColorHint="@color/app_color"
+        android:textSize="@dimen/btn_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_edt_txt"
 
         />
 
@@ -120,7 +122,8 @@
             android:id="@+id/login_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/already_have_an_account" />
+            android:text="@string/already_have_an_account"
+            android:textColor="@color/app_color" />
 
         <TextView
             android:id="@+id/text_login"
