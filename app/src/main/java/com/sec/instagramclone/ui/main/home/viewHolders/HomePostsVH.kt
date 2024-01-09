@@ -15,10 +15,10 @@ BindingViewHolder<CellHomePostsBinding>(binding) {
     fun bind(media: MediaBody) {
         var flag=true
         if(media.videoUrl!=""){
-            binding.videoView.visibility=View.VISIBLE
+            binding.playerView.visibility=View.VISIBLE
             binding.postImg.visibility=View.GONE
-            binding.videoView.setVideoPath(media.videoUrl)
-            binding.videoView.setOnPreparedListener {
+            binding.playerView.setVideoPath(media.videoUrl)
+            binding.playerView.setOnPreparedListener {
                 it.start()
             }
 
@@ -63,5 +63,6 @@ binding.likeImg.setOnSafeClickListener{
 
 
     }
+
 
 }

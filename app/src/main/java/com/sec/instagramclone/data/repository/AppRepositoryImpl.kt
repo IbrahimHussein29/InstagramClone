@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.sec.instagramclone.data.Constants
@@ -228,8 +229,9 @@ class AppRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
+                val query=fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).orderBy("time",Query.Direction.ASCENDING)
                 val result =
-                    fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid).get().await()
+                    query.get().await()
                 val postList = arrayListOf<PostBody>()
                 val tempList = arrayListOf<PostBody>()
                 for (i in result.documents) {
@@ -257,9 +259,10 @@ class AppRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
+
+                val query=fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL).orderBy("time",Query.Direction.ASCENDING)
                 val result =
-                    fireStoreDatabase.collection(firebaseAuth.currentUser!!.uid + Constants.REEL)
-                        .get().await()
+                    query.get().await()
                 val reelList = arrayListOf<ReelBody>()
                 val tempList = arrayListOf<ReelBody>()
                 for (i in result.documents) {
@@ -348,8 +351,9 @@ class AppRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
+                val query=fireStoreDatabase.collection(Constants.REEL).orderBy("time",Query.Direction.ASCENDING)
                 val result =
-                    fireStoreDatabase.collection(Constants.REEL).get().await()
+                    query.get().await()
                 val reelList = arrayListOf<ReelBody>()
                 val tempList = arrayListOf<ReelBody>()
                 for (i in result.documents) {
@@ -377,8 +381,9 @@ class AppRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
+                val query=fireStoreDatabase.collection(Constants.MEDIA).orderBy("time",Query.Direction.ASCENDING)
                 val result =
-                    fireStoreDatabase.collection(Constants.MEDIA).get().await()
+                    query.get().await()
                 val mediaList = arrayListOf<MediaBody>()
                 val tempList = arrayListOf<MediaBody>()
                 for (i in result.documents) {
