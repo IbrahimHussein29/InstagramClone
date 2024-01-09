@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UploadFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentUploadBinding? = null
+    private var _binding: FragmentUploadBinding?= null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

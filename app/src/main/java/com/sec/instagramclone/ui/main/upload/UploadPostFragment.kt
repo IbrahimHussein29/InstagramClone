@@ -98,6 +98,7 @@ class UploadPostFragment : Fragment() {
                     binding.captionEdtTxt.text.toString()
 
                 )
+
                 viewModel.postImage(post, media)
 
             }

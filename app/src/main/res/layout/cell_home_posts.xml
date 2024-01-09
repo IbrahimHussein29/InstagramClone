@@ -65,13 +65,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <VideoView
+        <androidx.media3.ui.PlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginTop="@dimen/margin_small"
             android:contentDescription="@string/app_name"
             android:visibility="gone"
+            app:use_controller="false"
+            app:resize_mode="fit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -7,5 +7,6 @@ data class UserBody(
     var name: String = "",
     var email: String = "",
     var password: String = "",
-    var isFollowed: Boolean = true
+    var isFollowed: Boolean = true,
+    var posts:ArrayList<PostBody>?=null
 ) : Serializable

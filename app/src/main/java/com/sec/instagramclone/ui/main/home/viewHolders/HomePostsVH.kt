@@ -2,6 +2,8 @@ package com.sec.instagramclone.ui.main.home.viewHolders
 
 import android.content.Intent
 import android.view.View
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.body.MediaBody
@@ -10,56 +12,52 @@ import com.sec.instagramclone.ui.common.extensions.setImageCenteredCropped
 import com.sec.instagramclone.ui.common.extensions.setOnSafeClickListener
 import com.sec.instagramclone.ui.common.viewHolder.BindingViewHolder
 
-class HomePostsVH (binding: CellHomePostsBinding) :
-BindingViewHolder<CellHomePostsBinding>(binding) {
-    fun bind(media: MediaBody) {
-        var flag=true
-        if(media.videoUrl!=""){
-            binding.playerView.visibility=View.VISIBLE
-            binding.postImg.visibility=View.GONE
-            binding.playerView.setVideoPath(media.videoUrl)
-            binding.playerView.setOnPreparedListener {
-                it.start()
-            }
+class HomePostsVH(binding: CellHomePostsBinding) :
+    BindingViewHolder<CellHomePostsBinding>(binding){
+    fun bind(media: MediaBody, player: ExoPlayer) {
+        var flag = true
+        if (media.videoUrl != "") {
+            binding.playerView.visibility = View.VISIBLE
+            binding.postImg.visibility = View.GONE
+            binding.playerView.player = player
 
-        }else{
+
+        } else {
             binding.postImg.setImageCenteredCropped(media.postUrl)
         }
 
-        binding.name.text= media.mediaUsername
+        binding.name.text = media.mediaUsername
         try {
             val text = TimeAgo.using(media.time.toLong())
-            binding.time.text=text
-        }catch (e:Exception){
-            binding.time.text=""
+            binding.time.text = text
+        } catch (e: Exception) {
+            binding.time.text = ""
         }
 
 
         binding.profileImg.setImageCenteredCropped(media.mediaUserImage)
-       if(media.caption.isNullOrBlank()){
-           binding.captionTxt.visibility= View.GONE
-       }else{
-           binding.captionTxt.text= media.caption
-       }
-binding.likeImg.setOnSafeClickListener{
-    if(flag){
-       binding.likeImg.setImageResource(R.drawable.ic_like_2)
-        flag= false
-    }else{
-        binding.likeImg.setImageResource(R.drawable.ic_like)
-        flag= true
-    }
+        if (media.caption.isNullOrBlank()) {
+            binding.captionTxt.visibility = View.GONE
+        } else {
+            binding.captionTxt.text = media.caption
+        }
+        binding.likeImg.setOnSafeClickListener {
+            if (flag) {
+                binding.likeImg.setImageResource(R.drawable.ic_like_2)
+                flag = false
+            } else {
+                binding.likeImg.setImageResource(R.drawable.ic_like)
+                flag = true
+            }
 
 
-}
-        binding.shareImg.setOnSafeClickListener{
+        }
+        binding.shareImg.setOnSafeClickListener {
             val i = Intent(Intent.ACTION_SEND)
-            i.type="text/plain"
+            i.type = "text/plain"
             i.putExtra(Intent.EXTRA_TEXT, media.postUrl)
             context.startActivity(i)
         }
-
-
 
 
     }

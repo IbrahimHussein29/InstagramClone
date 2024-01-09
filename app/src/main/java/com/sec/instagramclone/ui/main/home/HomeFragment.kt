@@ -10,10 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import com.sec.instagramclone.R
 import com.sec.instagramclone.data.body.MediaBody
-
 import com.sec.instagramclone.data.body.UserBody
 import com.sec.instagramclone.data.common.onSuccess
 import com.sec.instagramclone.databinding.FragmentHomeBinding
@@ -23,18 +24,22 @@ import com.sec.instagramclone.ui.main.upload.UploadReelsFragment
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var user: UserBody
+    private lateinit var playerList:ArrayList<ExoPlayer>
     private val viewModel by viewModels<HomeVM>()
+    private var exoPlayer:ExoPlayer?=null
+    var playBackPosition= 0L
+    var playWhenReady=true
     private val adapter by lazy {
-        HomeAdapter(arrayListOf()) { item ->
-            handleItemClicked(item)
+        HomeAdapter(arrayListOf(), arrayListOf())
 
-        }
     }
+
 
 
     private val binding get() = _binding!!
@@ -43,21 +48,31 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setToolbar()
         bindData()
 
         setFragmentListeners()
-        return binding.root
     }
+
 
     private fun bindData() {
         viewModel.getUserData()
         collectUserProfileData()
         binding.homeRecyclerView.adapter = adapter
+
         viewModel.getAllMedia(MediaBody())
+
         collectPostData()
     }
+
+
 
     private fun collectUserProfileData() {
         collectLatestLifecycleFlow(viewModel.userData) { it ->
@@ -76,8 +91,21 @@ class HomeFragment : Fragment() {
     private fun collectPostData() {
         collectLatestLifecycleFlow(viewModel.mediaData) {
             it?.onSuccess {
-
                 adapter.items =it
+               playerList=ArrayList<ExoPlayer>()
+                    for(item in adapter.items){
+                        exoPlayer=ExoPlayer.Builder(requireContext()).build()
+                        var mediaItem=MediaItem.fromUri(item.videoUrl)
+                        exoPlayer?.addMediaItem(mediaItem)
+                        exoPlayer?.seekTo(playBackPosition)
+                        exoPlayer?.playWhenReady=playWhenReady
+                        exoPlayer?.prepare()
+
+                        playerList.add(exoPlayer!!)
+
+                    }
+                adapter.players=playerList
+
                 adapter.notifyDataSetChanged()
             }
 
@@ -112,12 +140,35 @@ class HomeFragment : Fragment() {
     private fun openAddDialog() {
         findNavController().navigate(R.id.uploadFragment)
     }
+    private fun releasePlayer(){
+        for(exoPlayer in playerList){
+            exoPlayer.let { it->
+                playBackPosition=it.currentPosition
+                playWhenReady=it.playWhenReady
+               it.release()
 
-    private fun handleItemClicked(item: MediaBody) {
-//        when (item) {
-//            is PostBody -> {
-//
-//            }
-//        }
+
+
+            }
+        }
     }
+
+    override fun onStop() {
+        super.onStop()
+        releasePlayer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releasePlayer()
+    }
+
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        releasePlayer()
+    }
+
+
+
 }

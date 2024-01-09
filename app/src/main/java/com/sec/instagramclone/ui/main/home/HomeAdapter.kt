@@ -1,5 +1,6 @@
 package com.sec.instagramclone.ui.main.home
 import android.view.ViewGroup
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.recyclerview.widget.RecyclerView
 import com.sec.instagramclone.data.body.MediaBody
 import com.sec.instagramclone.ui.common.extensions.toBinding
@@ -7,7 +8,7 @@ import com.sec.instagramclone.ui.main.home.viewHolders.HomePostsVH
 
 class HomeAdapter(
     var items: ArrayList<MediaBody>,
-    var onItemClicked: (item: MediaBody) -> Unit
+    var players:ArrayList<ExoPlayer>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -29,9 +30,11 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = items[position]
+        val player=players[position]
+
         when (holder) {
             is HomePostsVH -> {
-                holder.bind(item)
+                holder.bind(item, player)
 
             }
         }
